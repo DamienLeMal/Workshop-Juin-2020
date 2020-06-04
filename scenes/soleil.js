@@ -18,6 +18,7 @@ class soleil extends Phaser.Scene {
 		this.text = this.add.text(450,200,"1...", {fontFamily: 'myFont'}).setFontSize(64);
 		this.bloc = this.physics.add.sprite(400,230,'blanc').setScale(0.2,0.2).setTint(0x00ff00);
 		this.sun = -1;
+		this.d = 0;
 
 		//Illusion de l'animation de course :
 			//Quand sun == 3 -> Sprite à l'arrêt
@@ -32,9 +33,9 @@ class soleil extends Phaser.Scene {
 			this.sun += 1;
 			switch (this.sun) {
 				case 0: this.text.setText("1...");
-						this.bloc.setTint(0x00ff00); break;
 				case 1: this.text.setText("2...");
 						this.bloc.setTint(0x00ff00); break;
+						this.blancoc.setTint(0x00ff00); break;
 				case 2: this.text.setText("3...");
 						this.bloc.setTint(0xffA500); break;
 				case 3: this.text.setText("SOLEIL !");
@@ -42,11 +43,37 @@ class soleil extends Phaser.Scene {
 						this.bloc.setTint(0xff0000); break;
 			}
         }, loop: true});
+
+
+		new button("btn_up", 360, 1000, this);
+
+		function button(sprite, x, y, cela) {
+			this._sprite = cela.physics.add.sprite(x,y,sprite).setScale(0.25);
+
+			this._sprite.setInteractive();
+    		this._sprite.on("pointerover",()=>{
+    			
+        	})
+        	this._sprite.on("pointerout",()=>{
+        	    
+        	})
+        	this._sprite.on("pointerdown",()=>{
+        		this._sprite.setTexture('btn_down');
+        		if ((cela.sun == 0) || (cela.sun == 1) || (cela.sun == 2)){
+					cela.player.y -= 5;
+				}else{
+					cela.player.setTint(0x00ffff);
+				}
+        	})
+        	this._sprite.on("pointerup",()=>{
+        		this._sprite.setTexture('btn_up');
+        		this.d = 0;
+        	})
+		}
 	}
 
 	update() {
-		if (this.cursor.down.isDown){
-			//this.scene.start("scene_1", {score: this.score});
+		if (this.cursor.down.isDown){	
 			this.player.y += 10;
 		}
 		if (this.cursor.up.isDown && this.press == 0){
@@ -59,14 +86,6 @@ class soleil extends Phaser.Scene {
 		}
 		if (this.cursor.up.isUp){
 			this.press = 0;
-		}
-		if (this.cursor.right.isDown){
-			//this.scene.start("scene_1", {score: this.score});
-			this.x += 10;
-		}
-		if (this.cursor.left.isDown){
-			//this.scene.start("scene_2", {score: this.score});
-			this.x -= 10;
 		}
 	}
 }

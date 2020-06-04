@@ -14,6 +14,11 @@ class menu extends Phaser.Scene {
 		this.load.image('violet','assets/violet.jpg');
 		this.load.image('blanc','assets/blanc.png');
 
+		//Soleil
+		//UI
+		this.load.image('btn_up','assets/UI/soleil/btn_soleil_up.png');
+		this.load.image('btn_down','assets/UI/soleil/btn_soleil_down.png');
+
 	}
 
 	create() {
