@@ -12,6 +12,7 @@ class marelle extends Phaser.Scene {
 		this.bloc = this.physics.add.sprite(360,400,'blanc').setScale(0.5,0.5);
 
 		this.failed = 0;
+		this.count = 0;
 		this.delais = 2000;
 		this.text = this.add.text(250,500,"READY ?").setFontSize(64);
 		this.timer = this.time.addEvent({ delay: this.delais, callback: ()=>{
@@ -28,8 +29,10 @@ class marelle extends Phaser.Scene {
 							this.bloc.setTint(0x0000ff); break;//right
 				}
 				this.failed = 1;
-				if (this.delais > 1500) {
-					this.delais -= 100;
+				this.count += 1; //20 ça semble pas mal
+				console.log(this.count);
+				if (this.delais > 1000) {
+					this.delais -= 75;
 				}
 			}else{
 				this.failed = 2;
@@ -41,7 +44,6 @@ class marelle extends Phaser.Scene {
 	}
 
 	update() {
-		console.log(this.delais);
 		this.graphic.clear();
 		this.graphic.fillStyle(0xff0000);
         this.graphic.fillRect(100, 100, 520 - 520 * this.timer.getProgress(), 70);
